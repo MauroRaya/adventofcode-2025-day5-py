@@ -36,17 +36,19 @@ def standard_iteration(start: int, end: int, target: int) -> int:
     return -1
 
 
-def count_available_fresh_ingridient_ids(
+def count_available_fresh_ingredients_ids(
+    fresh_ingredients_ranges_ids_path: str,
+    ingredients_ids_path: str,
     search_func: Callable[[int, int, int], int]
 ) -> int:
     count: int = 0
 
-    with open('files/ranges.txt') as f1:
+    with open(fresh_ingredients_ranges_ids_path) as f1:
         ranges: list[str] = f1.read().splitlines()
 
-    with open('files/inputs.txt') as f2:
+    with open(ingredients_ids_path) as f2:
         for line in f2:
-            input: int = int(line.strip())
+            ingredient_id: int = int(line.strip())
 
             for range in ranges:
                 nums: list[str] = range.split('-')
@@ -54,7 +56,7 @@ def count_available_fresh_ingridient_ids(
                 start: int = int(nums[0])
                 end:   int = int(nums[1])
 
-                if search_func(start, end, input) != -1:
+                if search_func(start, end, ingredient_id) != -1:
                     count += 1
                     break
 
@@ -62,9 +64,29 @@ def count_available_fresh_ingridient_ids(
 
 
 def main():
-    time_it(count_available_fresh_ingridient_ids, binary_search)
-    time_it(count_available_fresh_ingridient_ids, standard_iteration)
+    print("Contando ingredientes frescos usando busca binária...")
+    count = time_it(
+        count_available_fresh_ingredients_ids, 
+        'files/ingredients/available/fresh/range-ids.txt',
+        'files/ingredients/available/unknown/ids.txt', 
+        binary_search
+    )
+    print(f"{count} ingredientes frescos encontrados\n")
+
+    print("Contando ingredientes frescos usando uma busca ordinária...")
+    count = time_it(
+        count_available_fresh_ingredients_ids, 
+        'files/ingredients/available/fresh/range-ids.txt',
+        'files/ingredients/available/unknown/ids.txt', 
+        standard_iteration
+    )
+    print(f"{count} ingredientes frescos encontrados\n")
 
 
 if __name__ == '__main__':
     main()
+
+
+# 1. injetar nome do arquivo [x]
+# 2. unit test []
+# 3. decorator de time it []
