@@ -27,8 +27,8 @@ def count_available_fresh_ingredients_ids(
 def main():
     print("Contando ingredientes frescos...")
     count = count_available_fresh_ingredients_ids(
-        'files/ingredients/available/fresh/range-ids.txt',
-        'files/ingredients/available/unknown/ids.txt'
+        'files/ingredients/fresh/range-ids.txt',
+        'files/ingredients/available/ids.txt'
     )
     print(f"{count} ingredientes frescos encontrados\n")
 
