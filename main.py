@@ -35,8 +35,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# 1. injetar nome do arquivo [x]
-# 2. unit test []
-# 3. decorator de time it []
