@@ -1,25 +1,22 @@
-import os.path
-
 def count_available_fresh_ingredients_ids(
     fresh_ingredients_ranges_ids_path: str,
-    ingredients_ids_path: str
+    available_ingredients_ids_path: str
 ) -> int:
-    count: int = 0
+    count = 0
 
-    with open(fresh_ingredients_ranges_ids_path) as f1:
-        ranges: list[str] = f1.read().splitlines()
+    with open(fresh_ingredients_ranges_ids_path) as fresh:
+        fresh_ranges = fresh.readlines()
 
-    with open(ingredients_ids_path) as f2:
-        for line in f2:
-            ingredient_id: int = int(line.strip())
+    with open(available_ingredients_ids_path) as available:
+        for line in available:
+            available_id = int(line)
 
-            for range in ranges:
-                nums: list[str] = range.split('-')
+            for range in fresh_ranges:
+                fresh_start_id, fresh_end_id = [int(id) for id in range.split('-')]
 
-                start: int = int(nums[0])
-                end:   int = int(nums[1])
+                is_available_id_fresh = fresh_start_id <= available_id <= fresh_end_id
 
-                if start <= ingredient_id <= end:
+                if is_available_id_fresh:
                     count += 1
                     break
 
