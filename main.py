@@ -44,13 +44,13 @@ def count_all_fresh_ingredients_ids(
     # if os.path.isfile('files/ingredients/fresh/merged-range-ids.txt'):
     #     return
 
-    with open(fresh_ingredients_ranges_ids_path) as f:
-        lines: list[str] = f.read().splitlines()
+    with open(fresh_ingredients_ranges_ids_path) as fresh:
+        lines = fresh.readlines()
 
     ranges: list[list[int]] = []
 
     for line in lines:
-        range: list[int] = [int(id) for id in line.split('-')]
+        range = [int(id) for id in line.split('-')]
         ranges.append(range)
 
     merged: list[list[int]] = merge_intervals(ranges)
